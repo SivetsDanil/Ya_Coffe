@@ -11,30 +11,43 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Эспрессо</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTableWidget" name="table">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>50</y>
-      <width>641</width>
-      <height>441</height>
+      <x>40</x>
+      <y>30</y>
+      <width>691</width>
+      <height>401</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="change_btn">
+   <widget class="QPushButton" name="add_btn">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>500</y>
-      <width>141</width>
+      <x>40</x>
+      <y>470</y>
+      <width>191</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>Изменить</string>
+     <string>Добавить</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="save_btn">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>470</y>
+      <width>171</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Сохранить</string>
     </property>
    </widget>
   </widget>
