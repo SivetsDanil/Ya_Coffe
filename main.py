@@ -1,6 +1,5 @@
+from PyQt5 import QtCore, QtWidgets
 import sys
-
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 import sqlite3
 
@@ -8,8 +7,8 @@ import sqlite3
 class Coffe(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.con = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        self.con = sqlite3.connect("data\coffee.sqlite")
         self.cur = self.con.cursor()
         self.fill_table()
         self.change_btn.clicked.connect(self.open_change)
@@ -31,12 +30,42 @@ class Coffe(QMainWindow):
         self.close()
         self.window.show()
 
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.table = QtWidgets.QTableWidget(self.centralwidget)
+        self.table.setGeometry(QtCore.QRect(70, 50, 641, 441))
+        self.table.setObjectName("table")
+        self.table.setColumnCount(0)
+        self.table.setRowCount(0)
+        self.change_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.change_btn.setGeometry(QtCore.QRect(70, 500, 141, 28))
+        self.change_btn.setObjectName("change_btn")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "Эспрессо"))
+        self.change_btn.setText(_translate("MainWindow", "Изменить"))
+
 
 class WorkWithBase(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
-        self.con = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        self.con = sqlite3.connect("data/coffee.sqlite")
         self.cur = self.con.cursor()
         self.fill_table()
         self.save_btn.clicked.connect(self.save_results)
@@ -91,7 +120,7 @@ class WorkWithBase(QMainWindow):
         self.row_id = self.cur.execute(f"select id from info where taste=''").fetchall()[0][0]
 
     def fill_table(self):
-        con = sqlite3.connect("coffee.sqlite")
+        con = sqlite3.connect("data/coffee.sqlite")
         cur = con.cursor()
         result = cur.execute('select * from info').fetchall()
         header = ['ID', 'название сорта', 'степень обжарки', 'молотый/в зернах', 'описание вкуса', 'цена',
@@ -103,6 +132,40 @@ class WorkWithBase(QMainWindow):
         for i, elem in enumerate(result):
             for j, val in enumerate(elem):
                 self.table.setItem(i, j, QTableWidgetItem(str(val)))
+
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.table = QtWidgets.QTableWidget(self.centralwidget)
+        self.table.setGeometry(QtCore.QRect(40, 30, 691, 401))
+        self.table.setObjectName("table")
+        self.table.setColumnCount(0)
+        self.table.setRowCount(0)
+        self.add_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.add_btn.setGeometry(QtCore.QRect(40, 470, 191, 28))
+        self.add_btn.setObjectName("add_btn")
+        self.save_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.save_btn.setGeometry(QtCore.QRect(270, 470, 171, 28))
+        self.save_btn.setObjectName("save_btn")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.add_btn.setText(_translate("MainWindow", "Добавить"))
+        self.save_btn.setText(_translate("MainWindow", "Сохранить"))
 
 
 def exept(a, b, c):
